@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sampling Distribution Experiment</title>
+    
+    <link rel = "stylesheet" href = "SDEstyles.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src = "distributions.js" defer></script>
+    <script src="SamplingDistributionExperiment.js" defer></script>
+    
+</head>
+<body> 
+    <!-- add reference links later -->
+    <nav>
+        <a href="#">SOCR</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <div class="container">
+        <h1>Sampling Distribution Experiment</h1>
+        <div class="controls">
+            <label for="distribution">Select Distribution:</label>
+            <select id="distribution">
+
+                <!-- A (Note: Sorted in Alphabetical Order) -->
+                <option value="arcsine">Arcsine</option>
+                <!-- B -->
+                <option value="benfordDigit">Benford Digit</option>
+                <option value="benfordMantissa">Benford Mantissa</option>
+                <option value="bernoulli">Bernoulli</option>
+                <option value="beta">Beta</option>
+                <option value="betaPrime">Beta Prime</option>
+                <option value="betaBinomial">Beta-Binomial</option>
+                <option value="betaNegativeBinomial">Beta-Negative Binomial</option>
+                <option value="birthday">Birthday</option>
+                <option value="binomial">Binomial</option>
+                <!-- C -->
+                <option value="cauchy">Cauchy</option>
+                <option value="chiSquare">Chi-Square</option>
+                <option value="convolution">Convolution</option>
+                <option value="coupon">Coupon Collector</option>
+                <!-- D -->
+                <option value="discreteUniform">Discrete Uniform (not working)</option>
+                <option value="discreteArcsine">Discrete Arcsine</option>
+                <!-- E -->
+                <option value="extremeValue">Extreme Value</option>
+                <option value="exponential">Exponential</option>
+                <option value="exponentialLogarithmic">Exponential-Logarithmic</option>
+                <!-- F -->
+                <option value="fDistribution">F Distribution</option>
+                <option value="finiteOrderStatistic">Finite Order Statistic</option>
+                <option value="foldedNormal">Folded Normal</option>
+                <!-- G -->
+                <option value="gamma">Gamma</option>
+                <option value="geometric">Geometric</option>
+                <!-- H -->
+                <option value="halfNormal">Half Normal</option>
+                <option value="hyperbolicSecant">Hyperbolic Secant</option>
+                <option value="hypergeometric">Hypergeometric</option>
+                <!-- I -->
+                <option value="irwinHall">Irwin-Hall</option>
+                <!-- L -->
+                <option value="laplace">Laplace</option>
+                <option value="locationScale">Location Scale</option>
+                <option value="logLogistic">Log-Logistic</option>
+                <option value="logarithmic">Logarithmic</option>
+                <option value="logNormal">Lognormal</option>
+                <!-- M -->
+                <option value="match">Match</option>
+                <option value="maxwellBoltzmann">Maxwell-Boltzmann</option>
+                <!-- N -->
+                <option value="negativeBinomial">Negative Binomial</option>
+                <option value="normal" selected>Normal</option>
+                <!-- O -->
+                <option value="orderStatistic">Order Statistic (not working)</option>
+                <!-- P -->
+                <option value="pareto">Pareto</option>
+                <option value="polya">Polya</option>
+                <option value="poisson">Poisson</option>
+                <!-- S -->
+                <option value="semiCircle">Semicircle</option>
+                <option value="student">Student t</option>
+                <!-- T -->
+                <option value="triangle">Triangle</option>
+                <!-- U -->
+                <option value="uQuadratic">U-Quadratic</option>
+                <option value="uniform">Uniform</option>
+                <!-- W -->
+                <option value="walkMax">Walk Max</option>
+                <option value="walkPosition">Walk Position</option>
+                <option value="weibull">Weibull</option>
+                <!-- Z -->
+                <option value="zeta">Zeta</option>
+
+            </select>
+            <label for="runSize">Run Size:</label> 
+            <input type="number" id="runSize" value="1" min="1">
+            <div></div>
+            <label for="metricOne">Summarizing Graph 1:  Select Metric:</label>
+            <select id="metricOne">
+                <option value = "mean">Mean</option>
+                <option value = "median">Median</option>
+                <option value = "sd">Standard Deviation</option>
+                <option value = "variance">Variance</option>
+                <option value = "varianceU">Variance(U)</option>
+                <option value = "mad">MAD</option>
+                <option value = "range">Range</option>
+            </select>
+            <label for="sampleSizeOne">Select Sample Size</label>
+            <input type="number" id="sampleSizeOne" value="10" min="1">
+            <div></div>
+            <label for="metricTwo">Summarizing Graph 2: Select Metric</label>
+            <select id="metricTwo">
+                <option value = "mean">Mean</option>
+                <option value = "median" selected>Median</option>
+                <option value = "sd">Standard Deviation</option>
+                <option value = "variance">Variance</option>
+                <option value = "varianceU">Variance(U)</option>
+                <option value = "mad">MAD</option>
+                <option value = "range">Range</option>
+            </select>
+            <label for="sampleSizeTwo">Select Sample Size</label>           
+            <input type="number" id="sampleSizeTwo" value="10" min="1">
+            <div></div>
+            <button onclick="runExperiment()">Run Experiment</button>
+            
+        </div>
+        
+        <div class="charts"> 
+            <div class="chart-table-pair">
+                <canvas id="NativeChart"></canvas>
+                <h3>Native Distribution</h3>
+                <table id="NativeTable">
+                    <tr><th>Sample Size</th><th>Mean</th><th>Median</th><th>SD</th><th>Skewness</th><th>Kurtosis</th></tr>
+                </table>
+            </div>
+            <div class="chart-table-pair">
+                <canvas id="sampleChart"></canvas>
+                <h3>Sample Distribution</h3>
+                <table id="sampleTable">
+                    <tr><th>Sample Size</th><th>Mean</th><th>Median</th><th>SD</th><th>Skewness</th><th>Kurtosis</th></tr>
+                </table>
+            </div>
+            <div class="chart-table-pair">
+                <canvas id="sampleMeansChart"></canvas>
+                <h3 id="g1Title"></h3>
+                <table id="sampleMeansTable">
+                    <tr><th>Number of Samples</th><th>Mean</th><th>Median</th><th>SD</th><th>Skewness</th><th>Kurtosis</th></tr>
+                </table>
+            </div>
+            <div class="chart-table-pair">
+                <canvas id="sampleVariancesChart"></canvas>
+                <h3 id="g2Title"></h3>
+                <table id="sampleVariancesTable">
+                    <tr><th>Number of Samples</th><th>Mean</th><th>Median</th><th>SD</th><th>Skewness</th><th>Kurtosis</th></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+  function updateTitle(selectId, titleId, prefix = 'Sampling Distribution of ') {
+    const sel = document.getElementById(selectId);
+    const title = document.getElementById(titleId);
+    title.textContent = prefix + sel.options[sel.selectedIndex].text;
+  }
+
+  document.getElementById('metricOne').addEventListener('change', () => {
+    updateTitle('metricOne', 'g1Title');
+  });
+  document.getElementById('metricTwo').addEventListener('change', () => {
+    updateTitle('metricTwo', 'g2Title');
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateTitle('metricOne', 'g1Title');
+    updateTitle('metricTwo', 'g2Title');
+  });
+</script>
